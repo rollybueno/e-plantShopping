@@ -39,7 +39,7 @@ Paradise Nursery is a beautiful and user-friendly plant shopping platform that o
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/e-plantShopping.git
+git clone https://github.com/rollybueno/e-plantShopping.git
 cd e-plantShopping
 ```
 
