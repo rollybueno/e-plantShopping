@@ -9,27 +9,45 @@ const CartItem = ({ onContinueShopping }) => {
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
- 
+    let total = 0; // Initialize a variable total to hold the cumulative sum
+    cart.forEach((item) => { // Iterate over the cart array using cart.forEach()
+      const quantity = item.quantity; // Extract quantity
+      const cost = parseFloat(item.cost.substring(1)); // Extract cost and convert string (e.g., "$10.00") to a number
+      total += cost * quantity; // Multiply cost by quantity and add to total
+    });
+    return total.toFixed(2); // Return the final total sum with 2 decimal places
   };
 
   const handleContinueShopping = (e) => {
-   
+    onContinueShopping(e); // Call the onContinueShopping function passed from the parent component
   };
 
-
+  const handleCheckoutShopping = (e) => {
+    alert('Functionality to be added for future reference');
+  };
 
   const handleIncrement = (item) => {
+    dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 })); // Dispatch updateQuantity to increase quantity by 1
   };
 
   const handleDecrement = (item) => {
-   
+    if (item.quantity > 1) {
+      // If the item's quantity is greater than 1, dispatch updateQuantity to decrease the quantity by 1
+      dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
+    } else {
+      // Else if the quantity would drop to 0, dispatch the removeItem action to remove the plant type from the cart
+      dispatch(removeItem(item.name));
+    }
   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item.name)); // Dispatch the removeItem action to delete the item from the cart
   };
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
+    const cost = parseFloat(item.cost.substring(1)); // Extract the numeric value from the item's cost string
+    return (cost * item.quantity).toFixed(2); // Multiply cost by quantity and return with 2 decimal places
   };
 
   return (
@@ -57,7 +75,7 @@ const CartItem = ({ onContinueShopping }) => {
       <div className="continue_shopping_btn">
         <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        <button className="get-started-button1" onClick={(e) => handleCheckoutShopping(e)}>Checkout</button>
       </div>
     </div>
   );
